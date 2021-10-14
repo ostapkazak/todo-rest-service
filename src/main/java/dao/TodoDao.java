@@ -1,6 +1,5 @@
 package dao;
 
-
 public interface TodoDao {
     void add(String taskDescription);
 

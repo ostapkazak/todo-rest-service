@@ -13,7 +13,7 @@ public class TodoService implements TodoDao {
     @Override
     public void add(String taskDescription) {
         tasks.put(1,new Task(taskDescription,false));
-        System.out.println("Задача успешно добавлена");
+        //System.out.println("Задача успешно добавлена");
     }
 
     @Override
@@ -22,16 +22,16 @@ public class TodoService implements TodoDao {
         try {
             task.setDone(!task.isDone());
             tasks.put(taskId,task);
-            System.out.println("Статус задачи успешно изменён");
+            //System.out.println("Статус задачи успешно изменён");
         }catch (NullPointerException e){
-            System.out.println("Задачи с таким идентификатором нет");
+            //System.out.println("Задачи с таким идентификатором нет");
         }
     }
 
     @Override
     public void print(boolean isAll) {
         if (tasks.isEmpty()){
-            System.out.println("Список задач пуст");
+            //System.out.println("Список задач пуст");
             return;
         }
 
@@ -49,11 +49,7 @@ public class TodoService implements TodoDao {
         });
 
         if (!hasUnDone.get() && !isAll){
-            System.out.println("Все задачи выполнены");
+            //System.out.println("Все задачи выполнены");
         }
-    }
-
-    public void help(){
-        System.out.println("add <Описание задачи> - Добавить задачу\nprint - Вывести список не выполненных задач\ntoggle <id> - Изменить статус задачи\nquit - Выйти из программы");
     }
 }
