@@ -35,7 +35,7 @@ public class TodoService implements TodoDao {
             return;
         }
 
-        AtomicBoolean hasUnDone = new AtomicBoolean(false);
+        //AtomicBoolean hasUnDone = new AtomicBoolean(false);
 
         tasks.forEach((id, task) -> {
             if (isAll) System.out.println(id + ". " + (task.isDone() ? "X" : " ") + " " + task.getTaskDescription());
@@ -43,13 +43,13 @@ public class TodoService implements TodoDao {
             else {
                 if (!task.isDone()) {
                     System.out.println(id + ". " + task.getTaskDescription());
-                    hasUnDone.set(true);
+                    //hasUnDone.set(true);
                 }
             }
         });
 
-        if (!hasUnDone.get() && !isAll){
+        /*if (!hasUnDone.get() && !isAll){
             //System.out.println("Все задачи выполнены");
-        }
+        }*/
     }
 }
