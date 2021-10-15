@@ -13,7 +13,6 @@ public class TodoService implements TodoDao {
     @Override
     public void add(String taskDescription) {
         tasks.put(1,new Task(taskDescription,false));
-        //System.out.println("Задача успешно добавлена");
     }
 
     @Override
@@ -22,34 +21,28 @@ public class TodoService implements TodoDao {
         try {
             task.setDone(!task.isDone());
             tasks.put(taskId,task);
-            //System.out.println("Статус задачи успешно изменён");
         }catch (NullPointerException e){
-            //System.out.println("Задачи с таким идентификатором нет");
+            System.out.println("Задачи с таким идентификатором нет");
         }
     }
 
     @Override
     public void print(boolean isAll) {
         if (tasks.isEmpty()){
-            //System.out.println("Список задач пуст");
+            System.out.println("Список задач пуст");
             return;
         }
 
-        //AtomicBoolean hasUnDone = new AtomicBoolean(false);
+        tasks.forEach((id, task) -> printTask(isAll,task,id));
+    }
 
-        tasks.forEach((id, task) -> {
-            if (isAll) System.out.println(id + ". " + (task.isDone() ? "X" : " ") + " " + task.getTaskDescription());
+    private void printTask(boolean isAllMark,Task task,Integer taskId){
+        if (isAllMark) System.out.println(taskId + ". " + (task.isDone() ? "X " : "") + task.getTaskDescription());
 
-            else {
-                if (!task.isDone()) {
-                    System.out.println(id + ". " + task.getTaskDescription());
-                    //hasUnDone.set(true);
-                }
+        else {
+            if (!task.isDone()) {
+                System.out.println(taskId + ". " + task.getTaskDescription());
             }
-        });
-
-        /*if (!hasUnDone.get() && !isAll){
-            //System.out.println("Все задачи выполнены");
-        }*/
+        }
     }
 }

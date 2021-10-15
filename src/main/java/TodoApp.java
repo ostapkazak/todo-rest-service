@@ -27,7 +27,7 @@ public class TodoApp {
                 else if (inputLine.startsWith(printCommand)){
                     if (inputLine.equals(printCommand)) service.print(false);
                     else if (inputLine.equals(printAllCommand)) service.print(true);
-                    //else System.out.println("Некорректный аргумент для команды");
+                    else System.out.println("Некорректный аргумент для команды");
                 }
 
                 else if (inputLine.startsWith(toggleCommand)){
@@ -35,23 +35,19 @@ public class TodoApp {
                         service.toggle(Integer.parseInt(inputLine.replace(toggleCommand,"").trim()));
                     }
                     catch (NumberFormatException e){
-                        //System.out.println("Введенный аргумент не является целым числом");
+                        System.out.println("Введенный аргумент не является целым числом");
                     }
                 }
-
-            /*else if (inputLine.equals("help")){
-                service.help();
-            }*/
 
                 else if (inputLine.equals(quitCommand)){
                     break;
                 }
 
                 else {
-                    //System.out.println("Некорректная команда");
+                    System.out.println("Некорректная команда");
                 }
             }catch (IOException e){
-                //System.out.println("....");
+                System.out.println("IOException");
             }
         }
     }
