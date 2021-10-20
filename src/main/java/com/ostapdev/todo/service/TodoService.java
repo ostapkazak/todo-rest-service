@@ -1,11 +1,10 @@
-package service;
+package com.ostapdev.todo.service;
 
-import dao.TodoDao;
-import model.Task;
+import com.ostapdev.todo.dao.TodoDao;
+import com.ostapdev.todo.model.Task;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TodoService implements TodoDao {
     private final Map<Integer,Task> tasks = new LinkedHashMap<>();

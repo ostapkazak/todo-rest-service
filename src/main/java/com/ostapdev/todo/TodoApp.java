@@ -1,5 +1,7 @@
-import dao.TodoDao;
-import service.TodoService;
+package com.ostapdev.todo;
+
+import com.ostapdev.todo.dao.TodoDao;
+import com.ostapdev.todo.service.TodoService;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package dao;
+package com.ostapdev.todo.dao;
 
 public interface TodoDao {
     void add(String taskDescription);

@@ -1,4 +1,4 @@
-package model;
+package com.ostapdev.todo.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
