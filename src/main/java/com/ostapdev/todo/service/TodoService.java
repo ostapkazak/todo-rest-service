@@ -3,23 +3,16 @@ package com.ostapdev.todo.service;
 import com.ostapdev.todo.dao.TodoDao;
 import com.ostapdev.todo.model.Task;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TodoService implements TodoDao {
-    private final Map<Integer,Task> tasks = new LinkedHashMap<>();
+    private final Map<Integer,Task> tasks = new HashMap<>();
+    private Integer lastTaskId = 0;
 
     @Override
     public void add(String taskDescription) {
-        if (tasks.isEmpty()) {
-            tasks.put(1,new Task(taskDescription,false));
-            return;
-        }
-
-        List<Integer> keys = new ArrayList<>(tasks.keySet());
-        tasks.put(keys.get(keys.size()-1)+1,new Task(taskDescription,false));
+        tasks.put(lastTaskId + 1,new Task(taskDescription,false));
+        lastTaskId++;
     }
 
     @Override
@@ -40,7 +33,13 @@ public class TodoService implements TodoDao {
             return;
         }
 
-        tasks.forEach((id, task) -> printTask(isAll,task,id));
+        tasks.forEach((id, task) -> {
+            if (isAll) printTask(task,id);
+
+            else {
+                if (!task.isDone()) printTask(task,id);
+            }
+        });
     }
 
     @Override
@@ -68,18 +67,12 @@ public class TodoService implements TodoDao {
 
     @Override
     public void search(String substring) {
-        tasks.forEach((id,task)->{
-            if (task.getTaskDescription().contains(substring)) printTask(true,task,id);
-        });
+        tasks.entrySet().stream()
+                .filter(e -> e.getValue().getTaskDescription().contains(substring))
+                .forEach(e->printTask(e.getValue(),e.getKey()));
     }
 
-    private void printTask(boolean isAllMark,Task task,Integer taskId){
-        if (isAllMark) System.out.println(taskId + ". " + (task.isDone() ? "[X]" : "[ ]") + task.getTaskDescription());
-
-        else {
-            if (!task.isDone()) {
-                System.out.println(taskId + ". " + task.getTaskDescription());
-            }
-        }
+    private void printTask(Task task,Integer taskId){
+        System.out.println(taskId + ". " + (task.isDone() ? "[X]" : "[ ]") + task.getTaskDescription());
     }
 }
