@@ -57,11 +57,14 @@ public class TodoService implements TodoDao {
     @Override
     public void edit(Integer taskId, String taskDescription) {
         Task task = tasks.get(taskId);
-        try {
+
+        if (task == null){
+            System.out.println("Задачи с таким идентификатором нет");
+        }
+
+        else {
             task.setTaskDescription(taskDescription);
             tasks.put(taskId,task);
-        }catch (NullPointerException e){
-            System.out.println("Задачи с таким идентификатором нет");
         }
     }
 
