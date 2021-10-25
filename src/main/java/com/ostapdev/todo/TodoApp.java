@@ -14,6 +14,9 @@ public class TodoApp {
         final String addCommand = "add";
         final String toggleCommand = "toggle";
         final String quitCommand = "quit";
+        final String deleteCommand = "delete";
+        final String editCommand = "edit";
+        final String searchCommand = "search";
 
         TodoDao service = new TodoService();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -39,6 +42,29 @@ public class TodoApp {
                     catch (NumberFormatException e){
                         System.out.println("Введенный аргумент не является целым числом");
                     }
+                }
+
+                else if (inputLine.startsWith(deleteCommand)){
+                    try {
+                        service.delete(Integer.parseInt(inputLine.replace(deleteCommand,"").trim()));
+                    }
+                    catch (NumberFormatException e){
+                        System.out.println("Введенный аргумент не является целым числом");
+                    }
+                }
+
+                else if (inputLine.startsWith(editCommand)){
+                    try {
+                        String[] commandArgs = inputLine.replace(editCommand,"").trim().split(" ",2);
+                        service.edit(Integer.parseInt(commandArgs[0]),commandArgs[1]);
+                    }
+                    catch (NumberFormatException e){
+                        System.out.println("Введенный аргумент не является целым числом");
+                    }
+                }
+
+                else if (inputLine.startsWith(searchCommand)){
+                    service.search(inputLine.replace(searchCommand,"").trim());
                 }
 
                 else if (inputLine.equals(quitCommand)){
