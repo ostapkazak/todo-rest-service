@@ -18,11 +18,14 @@ public class TodoService implements TodoDao {
     @Override
     public void toggle(Integer taskId) {
         Task task = tasks.get(taskId);
-        try {
+
+        if (task == null){
+            System.out.println("Задачи с таким идентификатором нет");
+        }
+
+        else {
             task.setDone(!task.isDone());
             tasks.put(taskId,task);
-        }catch (NullPointerException e){
-            System.out.println("Задачи с таким идентификатором нет");
         }
     }
 
