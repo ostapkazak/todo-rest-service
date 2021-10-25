@@ -3,15 +3,16 @@ package com.ostapdev.todo.service;
 import com.ostapdev.todo.dao.TodoDao;
 import com.ostapdev.todo.model.Task;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class TodoService implements TodoDao {
-    private final Map<Integer,Task> tasks = new LinkedHashMap<>();
+    private final Map<Integer,Task> tasks = new HashMap<>();
+    private Integer lastTaskId = 0;
 
     @Override
     public void add(String taskDescription) {
-        tasks.put(1,new Task(taskDescription,false));
+        tasks.put(lastTaskId + 1,new Task(taskDescription,false));
+        lastTaskId++;
     }
 
     @Override
@@ -32,16 +33,49 @@ public class TodoService implements TodoDao {
             return;
         }
 
-        tasks.forEach((id, task) -> printTask(isAll,task,id));
+        tasks.forEach((id, task) -> {
+            if (isAll) printTask(task,id);
+
+            else {
+                if (!task.isDone()) printTask(task,id);
+            }
+        });
     }
 
-    private void printTask(boolean isAllMark,Task task,Integer taskId){
-        if (isAllMark) System.out.println(taskId + ". " + (task.isDone() ? "X " : "") + task.getTaskDescription());
+    @Override
+    public void delete(Integer taskId) {
+        Task task = tasks.get(taskId);
+        if (task == null){
+            System.out.println("Задачи с таким идентификатором нет");
+        }
 
         else {
-            if (!task.isDone()) {
-                System.out.println(taskId + ". " + task.getTaskDescription());
-            }
+            tasks.remove(taskId);
         }
+    }
+
+    @Override
+    public void edit(Integer taskId, String taskDescription) {
+        Task task = tasks.get(taskId);
+
+        if (task == null){
+            System.out.println("Задачи с таким идентификатором нет");
+        }
+
+        else {
+            task.setTaskDescription(taskDescription);
+            tasks.put(taskId,task);
+        }
+    }
+
+    @Override
+    public void search(String substring) {
+        tasks.entrySet().stream()
+                .filter(e -> e.getValue().getTaskDescription().contains(substring))
+                .forEach(e->printTask(e.getValue(),e.getKey()));
+    }
+
+    private void printTask(Task task,Integer taskId){
+        System.out.println(taskId + ". " + (task.isDone() ? "[X]" : "[ ]") + task.getTaskDescription());
     }
 }
