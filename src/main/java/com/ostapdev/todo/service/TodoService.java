@@ -11,6 +11,9 @@ public class TodoService implements TodoDao {
 
     private static TodoService instance;
 
+    private TodoService() {
+    }
+
     public static TodoService getInstance(){
         if (instance == null) instance = new TodoService();
         return instance;
