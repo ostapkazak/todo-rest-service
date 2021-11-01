@@ -1,7 +1,7 @@
 package com.ostapdev.todo.parser.command;
 
 
-public class PrintCommand extends Command{
+public class PrintCommand extends BaseCommand {
     private static String command = "print";
 
     @Override
@@ -10,7 +10,7 @@ public class PrintCommand extends Command{
     }
 
     @Override
-    protected void run(String inputLine) {
+    protected void runImpl(String inputLine) {
         getService().print(inputLine.replace(command, "").trim().equals("all"));
     }
 }

@@ -1,7 +1,7 @@
 package com.ostapdev.todo.parser.command;
 
 
-public class EditCommand extends Command{
+public class EditCommand extends BaseCommand {
     private static String command = "edit";
     @Override
     public String getCommand() {
@@ -9,7 +9,7 @@ public class EditCommand extends Command{
     }
 
     @Override
-    protected void run(String inputLine) {
+    protected void runImpl(String inputLine) {
         try {
             String[] commandArgs = inputLine.replace(command,"").trim().split(" ",2);
             getService().edit(Integer.parseInt(commandArgs[0]),commandArgs[1]);

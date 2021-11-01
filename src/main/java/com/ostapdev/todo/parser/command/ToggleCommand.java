@@ -1,7 +1,7 @@
 package com.ostapdev.todo.parser.command;
 
 
-public class ToggleCommand extends Command{
+public class ToggleCommand extends BaseCommand {
     private static String command = "toggle";
 
     @Override
@@ -10,7 +10,7 @@ public class ToggleCommand extends Command{
     }
 
     @Override
-    public void run(String inputLine) {
+    public void runImpl(String inputLine) {
         try {
             getService().toggle(Integer.parseInt(inputLine.replace(command,"").trim()));
         }

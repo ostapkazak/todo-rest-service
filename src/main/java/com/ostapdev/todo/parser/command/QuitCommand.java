@@ -1,7 +1,7 @@
 package com.ostapdev.todo.parser.command;
 
 
-public class QuitCommand extends Command{
+public class QuitCommand extends BaseCommand {
     private static String command = "quit";
 
     @Override
@@ -10,7 +10,7 @@ public class QuitCommand extends Command{
     }
 
     @Override
-    protected void run(String inputLine) {
+    protected void runImpl(String inputLine) {
         System.exit(0);
     }
 }

@@ -1,7 +1,7 @@
 package com.ostapdev.todo.parser.command;
 
 
-public class AddCommand extends Command {
+public class AddCommand extends BaseCommand {
     private static String command = "add";
 
     @Override
@@ -10,7 +10,7 @@ public class AddCommand extends Command {
     }
 
     @Override
-    protected void run(String inputLine) {
+    protected void runImpl(String inputLine) {
         getService().add(inputLine.replace(command,"").trim());
     }
 }
