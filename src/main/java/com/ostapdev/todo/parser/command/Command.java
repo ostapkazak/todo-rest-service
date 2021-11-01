@@ -4,15 +4,14 @@ import com.ostapdev.todo.dao.TodoDao;
 import com.ostapdev.todo.service.TodoService;
 import lombok.*;
 
-@RequiredArgsConstructor
-public abstract class Command {
+public abstract class Command implements CommandInterface{
     @Getter
     private final TodoDao service = TodoService.getInstance();
 
-    @Getter
-    @Setter
-    @NonNull
-    private String command;
-
+    @Override
     public abstract void run(String inputLine);
+
+    public boolean isCommand(String inputLine,String command){
+        return inputLine.trim().startsWith(command);
+    }
 }

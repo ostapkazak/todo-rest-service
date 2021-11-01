@@ -1,17 +1,14 @@
 package com.ostapdev.todo.parser.command;
 
-import lombok.NonNull;
 
 public class EditCommand extends Command{
-    public EditCommand(@NonNull String command) {
-        super(command);
-    }
-
     @Override
     public void run(String inputLine) {
-        if (inputLine.startsWith(getCommand())){
+        final String command = "edit";
+
+        if (isCommand(inputLine,command)){
             try {
-                String[] commandArgs = inputLine.replace(getCommand(),"").trim().split(" ",2);
+                String[] commandArgs = inputLine.replace(command,"").trim().split(" ",2);
                 getService().edit(Integer.parseInt(commandArgs[0]),commandArgs[1]);
             }
             catch (NumberFormatException e){
