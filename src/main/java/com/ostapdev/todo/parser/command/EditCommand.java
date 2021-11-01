@@ -2,18 +2,20 @@ package com.ostapdev.todo.parser.command;
 
 
 public class EditCommand extends Command{
+    private static String command = "edit";
     @Override
-    public void run(String inputLine) {
-        final String command = "edit";
+    public String getCommand() {
+        return command;
+    }
 
-        if (isCommand(inputLine,command)){
-            try {
-                String[] commandArgs = inputLine.replace(command,"").trim().split(" ",2);
-                getService().edit(Integer.parseInt(commandArgs[0]),commandArgs[1]);
-            }
-            catch (NumberFormatException e){
-                System.out.println("Введенный аргумент не является целым числом");
-            }
+    @Override
+    protected void run(String inputLine) {
+        try {
+            String[] commandArgs = inputLine.replace(command,"").trim().split(" ",2);
+            getService().edit(Integer.parseInt(commandArgs[0]),commandArgs[1]);
+        }
+        catch (NumberFormatException e){
+            System.out.println("Введенный аргумент не является целым числом");
         }
     }
 }

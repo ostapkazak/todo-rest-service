@@ -8,10 +8,18 @@ public abstract class Command implements CommandInterface{
     @Getter
     private final TodoDao service = TodoService.getInstance();
 
-    @Override
-    public abstract void run(String inputLine);
+    public abstract String getCommand();
 
-    public boolean isCommand(String inputLine,String command){
+    @Override
+    public void checkInput(String inputLine){
+        if (isCommand(inputLine,getCommand())) {
+            this.run(inputLine);
+        }
+    }
+
+    protected abstract void run(String inputLine);
+
+    private boolean isCommand(String inputLine,String command){
         return inputLine.trim().startsWith(command);
     }
 }

@@ -2,10 +2,15 @@ package com.ostapdev.todo.parser.command;
 
 
 public class SearchCommand extends Command{
-    @Override
-    public void run(String inputLine) {
-        final String command = "search";
+    private static String command = "search";
 
-        if (isCommand(inputLine,command)) getService().search(inputLine.replace(command,"").trim());
+    @Override
+    public String getCommand() {
+        return command;
+    }
+
+    @Override
+    protected void run(String inputLine) {
+        getService().search(inputLine.replace(command,"").trim());
     }
 }
