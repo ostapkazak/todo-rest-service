@@ -1,7 +1,7 @@
 package com.ostapdev.todo.parser.command;
 
 
-public class SearchCommand extends Command{
+public class SearchCommand extends BaseCommand {
     private static String command = "search";
 
     @Override
@@ -10,7 +10,7 @@ public class SearchCommand extends Command{
     }
 
     @Override
-    protected void run(String inputLine) {
+    protected void runImpl(String inputLine) {
         getService().search(inputLine.replace(command,"").trim());
     }
 }

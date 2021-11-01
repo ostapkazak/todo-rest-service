@@ -1,7 +1,7 @@
 package com.ostapdev.todo.parser.command;
 
 
-public class DeleteCommand extends Command{
+public class DeleteCommand extends BaseCommand {
     private static String command  = "delete";
 
     @Override
@@ -10,7 +10,7 @@ public class DeleteCommand extends Command{
     }
 
     @Override
-    protected void run(String inputLine) {
+    protected void runImpl(String inputLine) {
         try {
             getService().delete(Integer.parseInt(inputLine.replace(command,"").trim()));
         }
