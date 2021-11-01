@@ -10,7 +10,7 @@ public class CommandParser {
 
     public void parse(String inputLine){
         for (Command command : commands){
-            command.run(inputLine);
+            command.checkInput(inputLine);
         }
     }
 }

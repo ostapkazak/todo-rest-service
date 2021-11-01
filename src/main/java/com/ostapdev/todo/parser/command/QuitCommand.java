@@ -2,10 +2,15 @@ package com.ostapdev.todo.parser.command;
 
 
 public class QuitCommand extends Command{
-    @Override
-    public void run(String inputLine) {
-        final String command = "quit";
+    private static String command = "quit";
 
-        if (isCommand(inputLine,command)) System.exit(0);
+    @Override
+    public String getCommand() {
+        return command;
+    }
+
+    @Override
+    protected void run(String inputLine) {
+        System.exit(0);
     }
 }
