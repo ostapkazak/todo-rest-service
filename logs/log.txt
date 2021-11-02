@@ -1,0 +1,12 @@
+23:47:47.445 [main] DEBUG c.ostapdev.todo.parser.CommandParser - input: add 1
+23:48:32.144 [main] DEBUG c.ostapdev.todo.parser.CommandParser - input: toggle sfsafasf
+23:48:32.144 [main] ERROR c.o.t.parser.command.ToggleCommand - java.lang.NumberFormatException: For input string: "sfsafasf"
+23:49:22.911 [main] DEBUG c.ostapdev.todo.parser.CommandParser - input: toggle 2
+23:49:22.911 [main] ERROR c.ostapdev.todo.service.TodoService - Задачи с таким идентификатором нет
+23:49:28.319 [main] DEBUG c.ostapdev.todo.parser.CommandParser - input: print
+23:49:28.323 [main] DEBUG c.ostapdev.todo.service.TodoService - out: 1. [ ]1
+23:57:43.283 [main] DEBUG c.ostapdev.todo.parser.CommandParser - input: asfasfa
+23:58:49.009 [main] DEBUG c.ostapdev.todo.parser.CommandParser - input: safasfsafa
+23:58:53.359 [main] DEBUG c.ostapdev.todo.parser.CommandParser - input: 11111
+00:06:55.252 [main] DEBUG c.ostapdev.todo.parser.CommandParser - input: ddddd
+00:15:19.630 [main] DEBUG c.ostapdev.todo.parser.CommandParser - input: print

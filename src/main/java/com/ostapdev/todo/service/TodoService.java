@@ -2,9 +2,11 @@ package com.ostapdev.todo.service;
 
 import com.ostapdev.todo.dao.TodoDao;
 import com.ostapdev.todo.model.Task;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
+@Slf4j
 public class TodoService implements TodoDao {
     private final Map<Integer,Task> tasks = new HashMap<>();
     private Integer lastTaskId = 0;
@@ -30,6 +32,7 @@ public class TodoService implements TodoDao {
         Task task = tasks.get(taskId);
 
         if (task == null){
+            log.error("Задачи с таким идентификатором нет");
             System.out.println("Задачи с таким идентификатором нет");
         }
 
@@ -59,6 +62,7 @@ public class TodoService implements TodoDao {
     public void delete(Integer taskId) {
         Task task = tasks.get(taskId);
         if (task == null){
+            log.error("Задачи с таким идентификатором нет");
             System.out.println("Задачи с таким идентификатором нет");
         }
 
@@ -72,6 +76,7 @@ public class TodoService implements TodoDao {
         Task task = tasks.get(taskId);
 
         if (task == null){
+            log.error("Задачи с таким идентификатором нет");
             System.out.println("Задачи с таким идентификатором нет");
         }
 
@@ -89,6 +94,7 @@ public class TodoService implements TodoDao {
     }
 
     private void printTask(Task task,Integer taskId){
+        log.debug("out: " + taskId + ". " + (task.isDone() ? "[X]" : "[ ]") + task.getTaskDescription());
         System.out.println(taskId + ". " + (task.isDone() ? "[X]" : "[ ]") + task.getTaskDescription());
     }
 }
