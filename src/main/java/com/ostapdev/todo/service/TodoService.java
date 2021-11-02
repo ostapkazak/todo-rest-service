@@ -9,6 +9,16 @@ public class TodoService implements TodoDao {
     private final Map<Integer,Task> tasks = new HashMap<>();
     private Integer lastTaskId = 0;
 
+    private static TodoService instance;
+
+    private TodoService() {
+    }
+
+    public static TodoService getInstance(){
+        if (instance == null) instance = new TodoService();
+        return instance;
+    }
+
     @Override
     public void add(String taskDescription) {
         tasks.put(lastTaskId + 1,new Task(taskDescription,false));
