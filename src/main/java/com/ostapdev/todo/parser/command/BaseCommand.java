@@ -13,7 +13,7 @@ public abstract class BaseCommand implements Command {
     @Override
     public void run(String inputLine){
         if (isCommand(inputLine,getCommand())) {
-            this.run(inputLine);
+            runImpl(inputLine);
         }
     }
 
