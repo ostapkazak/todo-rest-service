@@ -1,6 +1,8 @@
 package com.ostapdev.todo.parser.command;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class DeleteCommand extends BaseCommand {
     private static String command  = "delete";
 
@@ -15,6 +17,7 @@ public class DeleteCommand extends BaseCommand {
             getService().delete(Integer.parseInt(inputLine.replace(command,"").trim()));
         }
         catch (NumberFormatException e){
+            log.error(e.toString());
             System.out.println("Введенный аргумент не является целым числом");
         }
     }
