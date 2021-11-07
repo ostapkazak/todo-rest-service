@@ -45,6 +45,7 @@ public class TodoService implements TodoDao {
     @Override
     public void print(boolean isAll) {
         if (tasks.isEmpty()){
+            log.error("Список задач пуст");
             System.out.println("Список задач пуст");
             return;
         }
