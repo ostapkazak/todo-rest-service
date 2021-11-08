@@ -17,7 +17,7 @@ public class EditCommand extends BaseCommand {
             getService().edit(Integer.parseInt(commandArgs[0]),commandArgs[1]);
         }
         catch (NumberFormatException e){
-            log.error(e.toString());
+            log.error("Exception: ",e);
             System.out.println("Введенный аргумент не является целым числом");
         }
     }
