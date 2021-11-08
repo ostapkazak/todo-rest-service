@@ -11,7 +11,7 @@ public class CommandParser {
     private final List<BaseCommand> commands = CommandFactory.getCommands();
 
     public void parse(String inputLine){
-        log.debug(log.isDebugEnabled() ? "Input: " + inputLine : "");
+        log.debug("Input: {}", inputLine);
         for (BaseCommand command : commands){
             command.run(inputLine);
         }
