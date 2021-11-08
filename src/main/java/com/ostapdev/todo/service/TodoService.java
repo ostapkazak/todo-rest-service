@@ -32,7 +32,7 @@ public class TodoService implements TodoDao {
         Task task = tasks.get(taskId);
 
         if (task == null){
-            log.error("Задачи с таким идентификатором нет");
+            log.error("Задачи с id {} нет",taskId);
             System.out.println("Задачи с таким идентификатором нет");
         }
 
@@ -63,7 +63,7 @@ public class TodoService implements TodoDao {
     public void delete(Integer taskId) {
         Task task = tasks.get(taskId);
         if (task == null){
-            log.error("Задачи с таким идентификатором нет");
+            log.error("Задачи с id {} нет",taskId);
             System.out.println("Задачи с таким идентификатором нет");
         }
 
@@ -77,7 +77,7 @@ public class TodoService implements TodoDao {
         Task task = tasks.get(taskId);
 
         if (task == null){
-            log.error("Задачи с таким идентификатором нет");
+            log.error("Задачи с id {} нет",taskId);
             System.out.println("Задачи с таким идентификатором нет");
         }
 
