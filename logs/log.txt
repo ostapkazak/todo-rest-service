@@ -23,3 +23,7 @@ java.lang.NumberFormatException: For input string: "dsafa"
 	at com.ostapdev.todo.parser.command.BaseCommand.run(BaseCommand.java:16)
 	at com.ostapdev.todo.parser.CommandParser.parse(CommandParser.java:16)
 	at com.ostapdev.todo.TodoApp.main(TodoApp.java:17)
+14:29:40.033 [main] DEBUG c.ostapdev.todo.parser.CommandParser - Input:
+14:30:58.426 [main] DEBUG c.ostapdev.todo.parser.CommandParser - add
+14:40:30.237 [main] DEBUG c.ostapdev.todo.parser.CommandParser - Input: f
+14:40:32.974 [main] DEBUG c.ostapdev.todo.parser.CommandParser - Input: ad
