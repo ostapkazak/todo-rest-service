@@ -16,7 +16,7 @@ public class TodoApp {
             try {
                 commandParser.parse(reader.readLine());
             }catch (IOException e){
-                log.error(e.toString());
+                log.error("Exception: ",e);
                 System.out.println("IO");
             }
         }
