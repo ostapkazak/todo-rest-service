@@ -1,10 +1,10 @@
-# Default ignored files
 /shelf/
 /.idea/
 /target/
 *.iml
-# Datasource local storage ignored files
+
 /../../../../:\Development\course-todo-list\.idea/dataSources/
 /dataSources.local.xml
-# Editor-based HTTP Client requests
+
 /httpRequests/
+/logs
