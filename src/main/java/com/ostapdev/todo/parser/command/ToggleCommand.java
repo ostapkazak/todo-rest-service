@@ -1,6 +1,8 @@
 package com.ostapdev.todo.parser.command;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class ToggleCommand extends BaseCommand {
     private static String command = "toggle";
 
@@ -15,6 +17,7 @@ public class ToggleCommand extends BaseCommand {
             getService().toggle(Integer.parseInt(inputLine.replace(command,"").trim()));
         }
         catch (NumberFormatException e){
+            log.error("Exception: ",e);
             System.out.println("Введенный аргумент не является целым числом");
         }
     }
