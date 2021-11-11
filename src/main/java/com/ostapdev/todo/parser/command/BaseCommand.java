@@ -10,9 +10,6 @@ public abstract class BaseCommand implements Command {
     @Getter
     private final TodoDao service = TodoService.getInstance();
 
-    @Getter
-    private final ErrorPrinter errorPrinter = BaseErrorPrinter.getInstance();
-
     public abstract String getCommand();
 
     @Override
