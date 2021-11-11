@@ -1,12 +1,17 @@
 package com.ostapdev.todo.parser.command;
 
 import com.ostapdev.todo.dao.TodoDao;
+import com.ostapdev.todo.printer.BaseErrorPrinter;
+import com.ostapdev.todo.printer.ErrorPrinter;
 import com.ostapdev.todo.service.TodoService;
 import lombok.*;
 
 public abstract class BaseCommand implements Command {
     @Getter
     private final TodoDao service = TodoService.getInstance();
+
+    @Getter
+    private final ErrorPrinter errorPrinter = BaseErrorPrinter.getInstance();
 
     public abstract String getCommand();
 

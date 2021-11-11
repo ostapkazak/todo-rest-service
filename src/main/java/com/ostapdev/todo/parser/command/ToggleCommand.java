@@ -17,8 +17,7 @@ public class ToggleCommand extends BaseCommand {
             getService().toggle(Integer.parseInt(inputLine.replace(command,"").trim()));
         }
         catch (NumberFormatException e){
-            log.error("Exception: ",e);
-            System.out.println("Введенный аргумент не является целым числом");
+            getErrorPrinter().printError("Введенный аргумент не является целым числом",e);
         }
     }
 }
