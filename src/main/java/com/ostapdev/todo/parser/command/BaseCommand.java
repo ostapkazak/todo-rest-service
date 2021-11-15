@@ -11,7 +11,7 @@ public abstract class BaseCommand implements Command {
     public abstract String getCommand();
 
     @Override
-    public void run(String inputLine){
+    public final void run(String inputLine){
         if (isCommand(inputLine,getCommand())) {
             runImpl(inputLine);
         }
