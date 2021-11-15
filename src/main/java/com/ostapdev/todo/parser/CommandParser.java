@@ -8,6 +8,18 @@ import java.util.List;
 
 @Slf4j
 public class CommandParser {
+    private CommandParser(){}
+
+    private static CommandParser instance;
+
+    public static CommandParser getInstance(){
+        if (instance == null){
+            instance = new CommandParser();
+        }
+
+        return instance;
+    }
+
     private final List<BaseCommand> commands = CommandFactory.getCommands();
 
     public void parse(String inputLine){
