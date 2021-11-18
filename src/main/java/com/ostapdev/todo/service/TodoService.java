@@ -2,30 +2,27 @@ package com.ostapdev.todo.service;
 
 import com.ostapdev.todo.dao.TodoDao;
 import com.ostapdev.todo.model.Task;
-import com.ostapdev.todo.printer.BaseErrorPrinter;
-import com.ostapdev.todo.printer.BaseTaskPrinter;
 import com.ostapdev.todo.printer.ErrorPrinter;
 import com.ostapdev.todo.printer.TaskPrinter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Slf4j
+@Service
 public class TodoService implements TodoDao {
     private final Map<Integer,Task> tasks = new HashMap<>();
     private Integer lastTaskId = 0;
 
-    private final TaskPrinter taskPrinter = BaseTaskPrinter.getInstance();
-    private final ErrorPrinter errorPrinter = BaseErrorPrinter.getInstance();
+    private final TaskPrinter taskPrinter;
+    private final ErrorPrinter errorPrinter;
 
-    private static TodoService instance;
-
-    private TodoService() {
-    }
-
-    public static TodoService getInstance(){
-        if (instance == null) instance = new TodoService();
-        return instance;
+    @Autowired
+    public TodoService(TaskPrinter taskPrinter, ErrorPrinter errorPrinter) {
+        this.taskPrinter = taskPrinter;
+        this.errorPrinter = errorPrinter;
     }
 
     @Override
