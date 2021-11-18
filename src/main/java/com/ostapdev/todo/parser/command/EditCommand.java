@@ -1,7 +1,7 @@
 package com.ostapdev.todo.parser.command;
 
 import com.ostapdev.todo.dao.TodoDao;
-import com.ostapdev.todo.printer.BaseErrorPrinter;
+import com.ostapdev.todo.printer.ErrorPrinter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class EditCommand extends BaseCommand {
     private static String command = "edit";
-    private final BaseErrorPrinter baseErrorPrinter;
+    private final ErrorPrinter errorPrinter;
 
     @Autowired
-    public EditCommand(TodoDao todoDao, BaseErrorPrinter baseErrorPrinter) {
+    public EditCommand(TodoDao todoDao, ErrorPrinter errorPrinter) {
         super(todoDao);
-        this.baseErrorPrinter = baseErrorPrinter;
+        this.errorPrinter = errorPrinter;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class EditCommand extends BaseCommand {
             getTodoDao().edit(Integer.parseInt(commandArgs[0]),commandArgs[1]);
         }
         catch (NumberFormatException e){
-            baseErrorPrinter.printError("Введенный аргумент не является целым числом",e);
+            errorPrinter.printError("Введенный аргумент не является целым числом",e);
         }
     }
 }
