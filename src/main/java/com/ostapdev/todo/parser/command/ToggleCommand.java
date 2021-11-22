@@ -1,11 +1,22 @@
 package com.ostapdev.todo.parser.command;
 
-import com.ostapdev.todo.printer.BaseErrorPrinter;
+import com.ostapdev.todo.dao.TodoDao;
+import com.ostapdev.todo.printer.ErrorPrinter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Slf4j
+@Component
 public class ToggleCommand extends BaseCommand {
     private static String command = "toggle";
+    private final ErrorPrinter errorPrinter;
+
+    @Autowired
+    public ToggleCommand(TodoDao todoDao, ErrorPrinter errorPrinter) {
+        super(todoDao);
+        this.errorPrinter = errorPrinter;
+    }
 
     @Override
     public String getCommand() {
@@ -15,10 +26,10 @@ public class ToggleCommand extends BaseCommand {
     @Override
     public void runImpl(String inputLine) {
         try {
-            getService().toggle(Integer.parseInt(inputLine.replace(command,"").trim()));
+            getTodoDao().toggle(Integer.parseInt(inputLine.replace(command,"").trim()));
         }
         catch (NumberFormatException e){
-            BaseErrorPrinter.getInstance().printError("Введенный аргумент не является целым числом",e);
+            errorPrinter.printError("Введенный аргумент не является целым числом",e);
         }
     }
 }

@@ -1,26 +1,21 @@
 package com.ostapdev.todo.parser;
 
 import com.ostapdev.todo.parser.command.BaseCommand;
-import com.ostapdev.todo.parser.command.CommandFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Slf4j
+@Component
 public class CommandParser {
-    private CommandParser(){}
+    private final List<BaseCommand> commands;
 
-    private static CommandParser instance;
-
-    public static CommandParser getInstance(){
-        if (instance == null){
-            instance = new CommandParser();
-        }
-
-        return instance;
+    @Autowired
+    public CommandParser(List<BaseCommand> commands) {
+        this.commands = commands;
     }
-
-    private final List<BaseCommand> commands = CommandFactory.getCommands();
 
     public void parse(String inputLine){
         log.debug("Input: {}", inputLine);
