@@ -1,12 +1,16 @@
 package com.ostapdev.todo.parser.command;
 
 import com.ostapdev.todo.dao.TodoDao;
-import com.ostapdev.todo.service.TodoService;
 import lombok.*;
 
 public abstract class BaseCommand implements Command {
     @Getter
-    private final TodoDao service = TodoService.getInstance();
+    private final TodoDao todoDao;
+
+    protected BaseCommand(TodoDao todoDao) {
+        this.todoDao = todoDao;
+    }
+
 
     public abstract String getCommand();
 
