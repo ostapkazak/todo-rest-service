@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -30,19 +32,19 @@ public class TaskController {
     }
 
     @PatchMapping("{id}")
-    public void editTask(@PathVariable Integer id,@Valid @RequestBody TaskDto task){
+    public void editTask(@PathVariable @Min(1) Integer id, @Valid @RequestBody TaskDto task){
         log.debug("Edit task {} - {}", id, task.getTaskDescription());
         service.edit(id,task.getTaskDescription());
     }
 
     @PatchMapping("{id}/done")
-    public void toggleTask(@PathVariable Integer id){
+    public void toggleTask(@PathVariable @Min(1) Integer id){
         log.debug("Toggle task {}", id);
         service.toggle(id);
     }
 
     @DeleteMapping("{id}")
-    public void deleteTask(@PathVariable Integer id){
+    public void deleteTask(@PathVariable @Min(1) Integer id){
         log.debug("Delete task {}", id);
         service.delete(id);
     }
