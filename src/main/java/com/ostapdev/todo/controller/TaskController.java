@@ -1,6 +1,6 @@
 package com.ostapdev.todo.controller;
 
-import com.ostapdev.todo.dto.TaskDto;
+import com.ostapdev.todo.model.dto.TaskDto;
 import com.ostapdev.todo.model.Task;
 import com.ostapdev.todo.service.TaskService;
 import lombok.RequiredArgsConstructor;
@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import java.util.Map;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -20,8 +19,8 @@ public class TaskController {
     private final TaskService service;
 
     @GetMapping
-    public Map<Integer, Task> getTasks(@RequestParam(name = "isAll",required = false) Boolean isAll
-            ,@RequestParam(name = "target",required = false) String target){
+    public List<Task> getTasks(@RequestParam(name = "isAll",required = false) Boolean isAll
+            , @RequestParam(name = "target",required = false) String target){
         return service.getTasks(isAll,target);
     }
 
@@ -32,19 +31,19 @@ public class TaskController {
     }
 
     @PatchMapping("{id}")
-    public void editTask(@PathVariable @Min(1) Integer id, @Valid @RequestBody TaskDto task){
+    public void editTask(@PathVariable @Min(1) Long id, @Valid @RequestBody TaskDto task){
         log.debug("Edit task {} - {}", id, task.getTaskDescription());
         service.edit(id,task.getTaskDescription());
     }
 
     @PatchMapping("{id}/done")
-    public void toggleTask(@PathVariable @Min(1) Integer id){
+    public void toggleTask(@PathVariable @Min(1) Long id){
         log.debug("Toggle task {}", id);
         service.toggle(id);
     }
 
     @DeleteMapping("{id}")
-    public void deleteTask(@PathVariable @Min(1) Integer id){
+    public void deleteTask(@PathVariable @Min(1) Long id){
         log.debug("Delete task {}", id);
         service.delete(id);
     }

@@ -10,12 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler
-    public ResponseEntity<String> handle(EmptyListException e){
-        log.error("Exception",e);
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler
     public ResponseEntity<String> handle(NoSuchTaskException e){
         log.error("Exception",e);
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
