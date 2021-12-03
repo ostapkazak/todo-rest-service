@@ -24,16 +24,18 @@
 Пример вывода:
 
 ```json
-{
-    "1": {
-        "taskDescription": "1",
-        "done": false
-    },
-    "2": {
-        "taskDescription": "2",
-        "done": true
-    }
-}
+[
+  {
+    "id": 1,
+    "taskDescription": "Task 1",
+    "done": false
+  },
+  {
+    "id": 2,
+    "taskDescription": "Task 2",
+    "done": false
+  }
+]
 ```
 
 **_Изменение статуса задачи_**
