@@ -1,15 +1,23 @@
 package com.ostapdev.todo.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import javax.persistence.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@Table(name = "tasks")
+@Entity
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Task {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @NonNull
     private String taskDescription;
 
-    private boolean isDone;
+    @NonNull
+    private Boolean done;
 }
