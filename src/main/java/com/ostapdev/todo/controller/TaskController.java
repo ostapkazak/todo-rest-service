@@ -1,6 +1,7 @@
 package com.ostapdev.todo.controller;
 
-import com.ostapdev.todo.model.dto.TaskDto;
+import com.ostapdev.todo.dto.CreateTaskDtoRequest;
+import com.ostapdev.todo.dto.TaskDto;
 import com.ostapdev.todo.model.Task;
 import com.ostapdev.todo.service.TaskService;
 import lombok.RequiredArgsConstructor;
@@ -19,15 +20,15 @@ public class TaskController {
     private final TaskService service;
 
     @GetMapping
-    public List<Task> getTasks(@RequestParam(name = "isAll",required = false) Boolean isAll
+    public List<TaskDto> getTasks(@RequestParam(name = "isAll",required = false) Boolean isAll
             , @RequestParam(name = "target",required = false) String target){
         return service.getTasks(isAll,target);
     }
 
     @PostMapping
-    public void addTask(@Valid @RequestBody TaskDto dto){
-        log.debug("New task: {}", dto.getTaskDescription());
-        service.add(dto);
+    public void addTask(@Valid @RequestBody CreateTaskDtoRequest request){
+        log.debug("New task: {}", request.getTaskDescription());
+        service.add(request.getTaskDescription());
     }
 
     @PatchMapping("{id}")

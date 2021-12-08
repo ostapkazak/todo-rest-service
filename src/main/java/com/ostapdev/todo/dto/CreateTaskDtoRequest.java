@@ -1,11 +1,11 @@
-package com.ostapdev.todo.model.dto;
+package com.ostapdev.todo.dto;
 
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class TaskDto {
+public class CreateTaskDtoRequest {
     @NotBlank(message = "Task description may not be blank")
     private String taskDescription;
 }

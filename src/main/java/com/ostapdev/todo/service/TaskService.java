@@ -1,16 +1,15 @@
 package com.ostapdev.todo.service;
 
-import com.ostapdev.todo.model.dto.TaskDto;
-import com.ostapdev.todo.model.Task;
+import com.ostapdev.todo.dto.TaskDto;
 
 import java.util.List;
 
 public interface TaskService {
-    void add(TaskDto task);
+    void add(String taskDescription);
 
     void toggle(Long taskId);
 
-    List<Task> getTasks(Boolean isAll, String target);
+    List<TaskDto> getTasks(Boolean isAll, String target);
 
     void delete(Long taskId);
 
