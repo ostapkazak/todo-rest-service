@@ -1,24 +1,5 @@
 databaseChangeLog:
-  - logicalFilePath: db/changelog/db.changelog-master.yaml
-  - changeSet:
-      id: 1
-      author: ostapkazak
-      changes:
-        - createTable:
-            tableName: tasks
-            columns:
-              - column:
-                  name: id
-                  type: bigserial
-                  constraints:
-                    primaryKey: true
-              - column:
-                  name: task_description
-                  type: varchar(1000)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: done
-                  type: boolean
-                  constraints:
-                    nullable: false
+  - includeAll:
+      path: "/db/changelog/1"
+      relativeToChangeLogFile: true
+      errorIfMissingOrEmpty: true

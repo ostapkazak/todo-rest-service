@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: "001-create"
+      author: ostapkazak
+      changes:
+        - createTable:
+            tableName: tasks
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: task_description
+                  type: varchar(1000)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: done
+                  type: boolean
+                  constraints:
+                    nullable: false
