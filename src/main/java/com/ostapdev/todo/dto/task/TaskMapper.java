@@ -1,6 +1,5 @@
-package com.ostapdev.todo.dto.mapper;
+package com.ostapdev.todo.dto.task;
 
-import com.ostapdev.todo.dto.TaskDto;
 import com.ostapdev.todo.model.Task;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

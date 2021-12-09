@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: "004-alter"
+      author: ostapkazak
+      changes:
+        - addColumn:
+            tableName: tasks
+            columns:
+              - column:
+                  name: account_id
+                  type: bigint
+                  constraints:
+                    nullable: false

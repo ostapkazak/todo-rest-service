@@ -20,4 +20,9 @@ public class Task {
 
     @NonNull
     private Boolean done;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    @NonNull
+    private Account account;
 }

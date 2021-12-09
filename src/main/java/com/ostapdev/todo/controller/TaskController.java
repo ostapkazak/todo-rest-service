@@ -1,11 +1,11 @@
 package com.ostapdev.todo.controller;
 
-import com.ostapdev.todo.dto.CreateTaskDtoRequest;
-import com.ostapdev.todo.dto.TaskDto;
-import com.ostapdev.todo.model.Task;
-import com.ostapdev.todo.service.TaskService;
+import com.ostapdev.todo.dto.task.CreateTaskDtoRequest;
+import com.ostapdev.todo.dto.task.TaskDto;
+import com.ostapdev.todo.service.task.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,14 +21,14 @@ public class TaskController {
 
     @GetMapping
     public List<TaskDto> getTasks(@RequestParam(name = "isAll",required = false) Boolean isAll
-            , @RequestParam(name = "target",required = false) String target){
-        return service.getTasks(isAll,target);
+            , @RequestParam(name = "target",required = false) String target,Authentication authentication){
+        return service.getTasks(isAll,target,authentication.getName());
     }
 
     @PostMapping
-    public void addTask(@Valid @RequestBody CreateTaskDtoRequest request){
+    public void addTask(@Valid @RequestBody CreateTaskDtoRequest request, Authentication authentication){
         log.debug("New task: {}", request.getTaskDescription());
-        service.add(request.getTaskDescription());
+        service.add(request.getTaskDescription(),authentication.getName());
     }
 
     @PatchMapping("{id}")

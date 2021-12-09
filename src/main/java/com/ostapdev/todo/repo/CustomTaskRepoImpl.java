@@ -16,7 +16,7 @@ public class CustomTaskRepoImpl implements CustomTaskRepo{
     private final EntityManager entityManager;
 
     @Override
-    public List<Task> find(String targetDescription, Boolean includeCompleted) {
+    public List<Task> find(String targetDescription, Boolean includeCompleted, Long accountId) {
         StringBuilder jpql = new StringBuilder("from Task t ");
         List<String> conditions = new ArrayList<>();
 
@@ -30,10 +30,12 @@ public class CustomTaskRepoImpl implements CustomTaskRepo{
             }
         }
 
+        jpql.append("where t.account.id = ").append(accountId);
+
         if (!conditions.isEmpty()) {
-            jpql.append("where ")
-                    .append(String.join(" and ",conditions));
+            jpql.append(String.join(" and ",conditions));
         }
+
 
         TypedQuery<Task> typedQuery = entityManager.createQuery(jpql.toString(), Task.class);
 
