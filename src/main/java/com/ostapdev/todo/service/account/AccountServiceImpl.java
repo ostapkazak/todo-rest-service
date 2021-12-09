@@ -42,11 +42,10 @@ public class AccountServiceImpl implements AccountService{
         if (accountRepo.findAccountByUsername(request.getUsername()).isPresent()){
             throw new UserAlreadyExistException("User with username " + request.getUsername() + " already exist");
         }
-
-        request.setPassword(passwordEncoder.encode(request.getPassword()));
+        
         accountRepo.save(Account.builder()
                 .username(request.getUsername())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
                 .build());
     }
