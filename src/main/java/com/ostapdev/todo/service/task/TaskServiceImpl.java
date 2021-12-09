@@ -16,7 +16,7 @@ import java.util.*;
 public class TaskServiceImpl implements TaskService {
     private final TaskRepo taskRepo;
     private final AccountService accountService;
-    private final TaskMapper taskMapper = TaskMapper.instance;
+    private final TaskMapper taskMapper;
 
     @Override
     public void add(String taskDescription,String username) {

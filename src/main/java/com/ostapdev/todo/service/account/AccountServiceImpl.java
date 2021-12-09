@@ -18,7 +18,7 @@ import java.util.List;
 public class AccountServiceImpl implements AccountService{
     private final AccountRepo accountRepo;
     private final PasswordEncoder passwordEncoder;
-    private final AccountMapper accountMapper = AccountMapper.instance;
+    private final AccountMapper accountMapper;
 
     @Override
     public List<AccountDto> getAllAccounts() {
@@ -42,7 +42,7 @@ public class AccountServiceImpl implements AccountService{
         if (accountRepo.findAccountByUsername(request.getUsername()).isPresent()){
             throw new UserAlreadyExistException("User with username " + request.getUsername() + " already exist");
         }
-        
+
         accountRepo.save(Account.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
