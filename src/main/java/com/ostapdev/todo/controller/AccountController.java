@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,12 +28,12 @@ public class AccountController {
     }
 
     @PostMapping
-    public void addAccount(@RequestBody CreateAccountDtoRequest request){
+    public void addAccount(@RequestBody @Valid CreateAccountDtoRequest request){
         accountService.addAccount(request);
     }
 
     @PutMapping
-    public void updateAccount(@RequestBody AccountDto accountDto){
+    public void updateAccount(@RequestBody @Valid AccountDto accountDto){
         accountService.updateAccount(accountDto);
     }
 

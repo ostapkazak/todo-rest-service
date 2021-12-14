@@ -11,13 +11,23 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<String> handle(NoSuchDataException e){
-        log.error("Exception",e);
+        logException(e);
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
     public ResponseEntity<String> handle(UserAlreadyExistException e){
-        log.error("Exception",e);
+        logException(e);
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handle(TaskAccessException e){
+        logException(e);
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.FORBIDDEN);
+    }
+
+    private void logException(Throwable throwable){
+        log.error("Exception",throwable);
     }
 }

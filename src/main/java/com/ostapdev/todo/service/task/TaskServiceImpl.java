@@ -3,6 +3,7 @@ package com.ostapdev.todo.service.task;
 import com.ostapdev.todo.dto.task.TaskDto;
 import com.ostapdev.todo.dto.task.TaskMapper;
 import com.ostapdev.todo.exception.NoSuchDataException;
+import com.ostapdev.todo.exception.TaskAccessException;
 import com.ostapdev.todo.model.Task;
 import com.ostapdev.todo.repo.TaskRepo;
 import com.ostapdev.todo.service.account.AccountService;
@@ -27,6 +28,8 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void toggle(Long taskId) {
         Task task = taskRepo.findById(taskId).orElseThrow(()->new NoSuchDataException("Задачи с id " + taskId + " нет"));
+        checkTaskAuthor(task);
+
         task.setDone(!task.getDone());
         taskRepo.save(task);
     }
@@ -39,13 +42,22 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void delete(Long taskId) {
         Task task = taskRepo.findById(taskId).orElseThrow(()->new NoSuchDataException("Задачи с id " + taskId + " нет"));
+        checkTaskAuthor(task);
         taskRepo.delete(task);
     }
 
     @Override
     public void edit(Long taskId, String taskDescription) {
         Task task = taskRepo.findById(taskId).orElseThrow(()->new NoSuchDataException("Задачи с id " + taskId + " нет"));
+        checkTaskAuthor(task);
         task.setTaskDescription(taskDescription);
+
         taskRepo.save(task);
+    }
+
+    private void checkTaskAuthor(Task task){
+        if (!task.getAccount().getUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName())){
+            throw new TaskAccessException("Доступ к данной задаче запрещён");
+        }
     }
 }
