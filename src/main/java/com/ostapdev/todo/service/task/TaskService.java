@@ -5,11 +5,11 @@ import com.ostapdev.todo.dto.task.TaskDto;
 import java.util.List;
 
 public interface TaskService {
-    void add(String taskDescription,String username);
+    void add(String taskDescription);
 
     void toggle(Long taskId);
 
-    List<TaskDto> getTasks(Boolean isAll, String target,String username);
+    List<TaskDto> getTasks(Boolean isAll, String target);
 
     void delete(Long taskId);
 

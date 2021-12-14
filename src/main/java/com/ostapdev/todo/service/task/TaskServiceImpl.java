@@ -7,6 +7,7 @@ import com.ostapdev.todo.model.Task;
 import com.ostapdev.todo.repo.TaskRepo;
 import com.ostapdev.todo.service.account.AccountService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -19,8 +20,8 @@ public class TaskServiceImpl implements TaskService {
     private final TaskMapper taskMapper;
 
     @Override
-    public void add(String taskDescription,String username) {
-        taskRepo.save(new Task(taskDescription,false,accountService.getAccountByUsername(username)));
+    public void add(String taskDescription) {
+        taskRepo.save(new Task(taskDescription,false,accountService.getAccountByUsername(SecurityContextHolder.getContext().getAuthentication().getName())));
     }
 
     @Override
@@ -31,8 +32,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDto> getTasks(Boolean isAll, String target, String username) {
-        return taskMapper.toListOfDto(taskRepo.find(target,isAll,accountService.getAccountByUsername(username).getId()));
+    public List<TaskDto> getTasks(Boolean isAll, String target) {
+        return taskMapper.toListOfDto(taskRepo.find(target,isAll,accountService.getAccountByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
     }
 
     @Override

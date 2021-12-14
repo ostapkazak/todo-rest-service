@@ -21,14 +21,14 @@ public class TaskController {
 
     @GetMapping
     public List<TaskDto> getTasks(@RequestParam(name = "isAll",required = false) Boolean isAll
-            , @RequestParam(name = "target",required = false) String target,Authentication authentication){
-        return service.getTasks(isAll,target,authentication.getName());
+            , @RequestParam(name = "target",required = false) String target){
+        return service.getTasks(isAll,target);
     }
 
     @PostMapping
-    public void addTask(@Valid @RequestBody CreateTaskDtoRequest request, Authentication authentication){
+    public void addTask(@Valid @RequestBody CreateTaskDtoRequest request){
         log.debug("New task: {}", request.getTaskDescription());
-        service.add(request.getTaskDescription(),authentication.getName());
+        service.add(request.getTaskDescription());
     }
 
     @PatchMapping("{id}")
