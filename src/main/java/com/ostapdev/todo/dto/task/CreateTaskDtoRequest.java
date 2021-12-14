@@ -1,4 +1,4 @@
-package com.ostapdev.todo.dto;
+package com.ostapdev.todo.dto.task;
 
 import lombok.Data;
 

@@ -1,11 +1,11 @@
 package com.ostapdev.todo.controller;
 
-import com.ostapdev.todo.dto.CreateTaskDtoRequest;
-import com.ostapdev.todo.dto.TaskDto;
-import com.ostapdev.todo.model.Task;
-import com.ostapdev.todo.service.TaskService;
+import com.ostapdev.todo.dto.task.CreateTaskDtoRequest;
+import com.ostapdev.todo.dto.task.TaskDto;
+import com.ostapdev.todo.service.task.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

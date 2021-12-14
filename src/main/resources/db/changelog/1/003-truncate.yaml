@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: "003-truncate"
+      author: ostapkazak
+      changes:
+        - delete:
+            tableName: tasks

@@ -1,6 +1,6 @@
-package com.ostapdev.todo.service;
+package com.ostapdev.todo.service.task;
 
-import com.ostapdev.todo.dto.TaskDto;
+import com.ostapdev.todo.dto.task.TaskDto;
 
 import java.util.List;
 

@@ -10,8 +10,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler
-    public ResponseEntity<String> handle(NoSuchTaskException e){
+    public ResponseEntity<String> handle(NoSuchDataException e){
         log.error("Exception",e);
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handle(UserAlreadyExistException e){
+        log.error("Exception",e);
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
