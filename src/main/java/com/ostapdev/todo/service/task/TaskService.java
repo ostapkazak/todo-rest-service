@@ -5,7 +5,7 @@ import com.ostapdev.todo.dto.task.TaskDto;
 import java.util.List;
 
 public interface TaskService {
-    void add(String taskDescription);
+    void add(String taskDescription,String username);
 
     void toggle(Long taskId);
 

@@ -11,5 +11,5 @@ public interface AccountRepo extends JpaRepository<Account,Long> {
     Optional<Account> findAccountByUsername(String username);
 
     @Transactional
-    void deleteAccountByUsername(String username);
+    int deleteAccountByUsername(String username);
 }

@@ -32,7 +32,7 @@ public class AccountController {
         accountService.addAccount(request);
     }
 
-    @PutMapping
+    @PatchMapping
     public void updateAccount(@RequestBody @Valid AccountDto accountDto){
         accountService.updateAccount(accountDto);
     }

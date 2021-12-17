@@ -21,8 +21,8 @@ public class TaskServiceImpl implements TaskService {
     private final TaskMapper taskMapper;
 
     @Override
-    public void add(String taskDescription) {
-        taskRepo.save(new Task(taskDescription,false,accountService.getAccountByUsername(SecurityContextHolder.getContext().getAuthentication().getName())));
+    public void add(String taskDescription,String username) {
+        taskRepo.save(new Task(taskDescription,false,accountService.getAccountByUsername(username)));
     }
 
     @Override

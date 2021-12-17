@@ -2,10 +2,11 @@ package com.ostapdev.todo.controller;
 
 import com.ostapdev.todo.dto.task.CreateTaskDtoRequest;
 import com.ostapdev.todo.dto.task.TaskDto;
+import com.ostapdev.todo.model.Account;
 import com.ostapdev.todo.service.task.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,9 +27,9 @@ public class TaskController {
     }
 
     @PostMapping
-    public void addTask(@Valid @RequestBody CreateTaskDtoRequest request){
+    public void addTask(@Valid @RequestBody CreateTaskDtoRequest request, @AuthenticationPrincipal Account account){
         log.debug("New task: {}", request.getTaskDescription());
-        service.add(request.getTaskDescription());
+        service.add(request.getTaskDescription(), account.getUsername());
     }
 
     @PatchMapping("{id}")

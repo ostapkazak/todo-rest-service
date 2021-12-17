@@ -8,6 +8,7 @@ import com.ostapdev.todo.exception.UserAlreadyExistException;
 import com.ostapdev.todo.model.Account;
 import com.ostapdev.todo.repo.AccountRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -61,8 +62,9 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public void deleteAccount(String username) {
-        getAccountByUsername(username);
-
-        accountRepo.deleteAccountByUsername(username);
+        int rows = accountRepo.deleteAccountByUsername(username);
+        if (rows == 0){
+            throw new NoSuchDataException("User not found: " + username);
+        }
     }
 }
