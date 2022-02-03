@@ -1,5 +1,7 @@
 # Todo Rest Service
 
+[![coverage](badges/jacoco.svg)](https://github.com/ostapkazak/todo-rest-service/actions/workflows/maven.yml)
+
 [Documentation](https://app.swaggerhub.com/apis-docs/ostapkazak/todo/1.0.0)
 
 ## **Функциональность**
