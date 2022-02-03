@@ -1,5 +1,7 @@
 # Todo Rest Service
 
+![Coverage](.github/badges/jacoco.svg)
+
 [Documentation](https://app.swaggerhub.com/apis-docs/ostapkazak/todo/1.0.0)
 
 ## **Функциональность**
