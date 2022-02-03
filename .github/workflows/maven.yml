@@ -24,5 +24,8 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+      env:
+        PG_HOST: ${{secrets.DB_HOST}}
+        PG_PASSWORD: ${{secrets.DB_PASSWORD}}
     - name: jacoco-badge-generator
       uses: cicirello/jacoco-badge-generator@v2.5.0
