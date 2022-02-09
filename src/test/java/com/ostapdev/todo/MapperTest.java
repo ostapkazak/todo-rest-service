@@ -7,17 +7,13 @@ import com.ostapdev.todo.dto.task.TaskMapper;
 import com.ostapdev.todo.model.Account;
 import com.ostapdev.todo.model.Task;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mapstruct.factory.Mappers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
 public class MapperTest {
-    @Autowired
-    private TaskMapper taskMapper;
-    @Autowired
-    private AccountMapper accountMapper;
+    private TaskMapper taskMapper = Mappers.getMapper(TaskMapper.class);
+    private AccountMapper accountMapper = Mappers.getMapper(AccountMapper.class);
 
     @Test
     public void ToDto_TaskDescriptionTask1_Equal(){
