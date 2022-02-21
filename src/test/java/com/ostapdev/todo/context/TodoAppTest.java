@@ -1,4 +1,4 @@
-package com.ostapdev.todo;
+package com.ostapdev.todo.context;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
