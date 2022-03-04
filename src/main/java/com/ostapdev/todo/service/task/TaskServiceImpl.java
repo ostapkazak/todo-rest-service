@@ -5,6 +5,7 @@ import com.ostapdev.todo.dto.task.TaskMapper;
 import com.ostapdev.todo.exception.NoSuchDataException;
 import com.ostapdev.todo.exception.TaskAccessException;
 import com.ostapdev.todo.model.Task;
+import com.ostapdev.todo.remoteTaskService.RemoteTaskServiceAdapter;
 import com.ostapdev.todo.repo.TaskRepo;
 import com.ostapdev.todo.service.account.AccountService;
 import lombok.RequiredArgsConstructor;
@@ -19,40 +20,62 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepo taskRepo;
     private final AccountService accountService;
     private final TaskMapper taskMapper;
+    private final RemoteTaskServiceAdapter remoteTaskServiceAdapter;
 
     @Override
-    public void add(String taskDescription,String username) {
-        taskRepo.save(new Task(taskDescription,false,accountService.getAccountByUsername(username)));
+    public void add(String taskDescription, String username, Boolean remote) {
+        if (remote){
+            remoteTaskServiceAdapter.createTask(taskDescription);
+        } else {
+            taskRepo.save(new Task(taskDescription,false,accountService.getAccountByUsername(username)));
+        }
     }
 
     @Override
-    public void toggle(Long taskId) {
-        Task task = taskRepo.findById(taskId).orElseThrow(()->new NoSuchDataException("Задачи с id " + taskId + " нет"));
-        checkTaskAuthor(task);
+    public void toggle(Long taskId, Boolean remote) {
+        if (remote){
+           TaskDto taskDto = remoteTaskServiceAdapter.getTaskById(taskId.toString());
+           if (taskDto != null) remoteTaskServiceAdapter.toggleTask(taskId.toString(),!taskDto.getDone());
+           else throw new  NoSuchDataException("Задачи с id " + taskId + " нет");
+        }
 
-        task.setDone(!task.getDone());
-        taskRepo.save(task);
+        else {
+            Task task = taskRepo.findById(taskId).orElseThrow(()->new NoSuchDataException("Задачи с id " + taskId + " нет"));
+            checkTaskAuthor(task);
+
+            task.setDone(!task.getDone());
+            taskRepo.save(task);
+        }
     }
 
     @Override
-    public List<TaskDto> getTasks(Boolean isAll, String target) {
+    public List<TaskDto> getTasks(Boolean isAll, String target, Boolean remote) {
+        if (remote) return remoteTaskServiceAdapter.getTasks(isAll,target);
         return taskMapper.toListOfDto(taskRepo.find(target,isAll,accountService.getAccountByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
     }
 
     @Override
-    public void delete(Long taskId) {
-        Task task = taskRepo.findById(taskId).orElseThrow(()->new NoSuchDataException("Задачи с id " + taskId + " нет"));
-        checkTaskAuthor(task);
-        taskRepo.delete(task);
+    public void delete(Long taskId, Boolean remote) {
+        if (remote) {
+            remoteTaskServiceAdapter.deleteTask(taskId.toString());
+        }else {
+            Task task = taskRepo.findById(taskId).orElseThrow(()->new NoSuchDataException("Задачи с id " + taskId + " нет"));
+            checkTaskAuthor(task);
+            taskRepo.delete(task);
+        }
     }
 
     @Override
-    public void edit(Long taskId, String taskDescription) {
-        Task task = taskRepo.findById(taskId).orElseThrow(()->new NoSuchDataException("Задачи с id " + taskId + " нет"));
-        checkTaskAuthor(task);
-        task.setTaskDescription(taskDescription);
+    public void edit(Long taskId, String taskDescription, Boolean remote) {
+        if (remote){
+            remoteTaskServiceAdapter.editTask(taskId.toString(),taskDescription);
+        }else {
+            Task task = taskRepo.findById(taskId).orElseThrow(()->new NoSuchDataException("Задачи с id " + taskId + " нет"));
+            checkTaskAuthor(task);
+            task.setTaskDescription(taskDescription);
 
-        taskRepo.save(task);
+            taskRepo.save(task);
+        }
     }
 
     private void checkTaskAuthor(Task task){

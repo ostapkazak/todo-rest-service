@@ -37,6 +37,14 @@
                     </execution>
                 </executions>
             </plugin>
+	        <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-compiler-plugin</artifactId>
+		        <configuration>
+			        <source>9</source>
+			        <target>9</target>
+		        </configuration>
+	        </plugin>
         </plugins>
     </build>
 
@@ -145,6 +153,19 @@
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
             <version>1.16.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock-jre8</artifactId>
+            <version>2.32.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

@@ -1,5 +1,6 @@
 package com.ostapdev.todo.exception;
 
+import com.ostapdev.todo.remoteTaskService.RemoteTaskServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handle(TaskAccessException e){
         logException(e);
         return new ResponseEntity<>(e.getMessage(),HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handle(RemoteTaskServiceException e){
+        logException(e);
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private void logException(Throwable throwable){
