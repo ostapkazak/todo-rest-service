@@ -18,9 +18,11 @@ public interface RemoteTaskMapper {
 
     @Mapping(target = "done",ignore = true)
     @Mapping(target = "taskDescription",source = "text")
+    @Mapping(target = "isRemote",constant = "true")
     List<TaskDto> toListOfDto(List<RemoteTask> remoteTasks);
 
     @Mapping(target = "done",ignore = true)
     @Mapping(target = "taskDescription",source = "text")
+    @Mapping(target = "isRemote",constant = "true")
     TaskDto toDto(RemoteTask remoteTask);
 }

@@ -9,7 +9,7 @@ public interface TaskService {
 
     void toggle(Long taskId, Boolean remote);
 
-    List<TaskDto> getTasks(Boolean isAll, String target, Boolean remote);
+    List<TaskDto> getTasks(Boolean isAll, String target);
 
     void delete(Long taskId, Boolean remote);
 

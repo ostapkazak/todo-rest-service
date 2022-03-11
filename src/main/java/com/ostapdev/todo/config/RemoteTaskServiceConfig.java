@@ -13,4 +13,6 @@ public class RemoteTaskServiceConfig {
     private String url;
     private String username;
     private String password;
+    private final long connectTimeout = 5;
+    private final long readTimeout = 15;
 }

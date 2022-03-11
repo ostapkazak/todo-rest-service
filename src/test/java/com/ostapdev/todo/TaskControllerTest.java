@@ -36,7 +36,7 @@ public class TaskControllerTest {
 
     @Test
     public void GetTasks_TasksNotEmpty_ReturnListOfTasks(){
-        when(taskService.getTasks(anyBoolean(),anyString(), anyBoolean())).thenReturn(Arrays.asList(new TaskDto(1L,"1",false),new TaskDto(2L,"2",false)));
-        assertFalse(taskController.getTasks(true, "",false).isEmpty());
+        when(taskService.getTasks(anyBoolean(),anyString())).thenReturn(Arrays.asList(new TaskDto(1L,"1",false,true),new TaskDto(2L,"2",false,true)));
+        assertFalse(taskController.getTasks(true, "").isEmpty());
     }
 }

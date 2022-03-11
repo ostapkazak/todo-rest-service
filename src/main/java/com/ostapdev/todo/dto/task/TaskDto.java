@@ -11,4 +11,5 @@ public class TaskDto {
     private Long id;
     private String taskDescription;
     private Boolean done;
+    private Boolean isRemote;
 }

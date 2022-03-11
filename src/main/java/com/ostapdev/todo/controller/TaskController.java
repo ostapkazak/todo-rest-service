@@ -23,8 +23,8 @@ public class TaskController {
 
     @GetMapping
     public List<TaskDto> getTasks(@RequestParam(name = "isAll",required = false) Boolean isAll
-            , @RequestParam(name = "target",required = false) String target,@RequestParam(name = "remote",required = false,defaultValue = "false") Boolean remote){
-        return service.getTasks(isAll,target,remote);
+            , @RequestParam(name = "target",required = false) String target){
+        return service.getTasks(isAll,target);
     }
 
     @PostMapping

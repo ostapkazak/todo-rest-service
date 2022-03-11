@@ -49,9 +49,10 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDto> getTasks(Boolean isAll, String target, Boolean remote) {
-        if (remote) return remoteTaskServiceAdapter.getTasks(isAll,target);
-        return taskMapper.toListOfDto(taskRepo.find(target,isAll,accountService.getAccountByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getId()));
+    public List<TaskDto> getTasks(Boolean isAll, String target) {
+        List<TaskDto> tasks = remoteTaskServiceAdapter.getTasks(isAll,target);
+        tasks.addAll(taskMapper.toListOfDto(taskRepo.find(target,isAll,accountService.getAccountByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getId())));
+        return tasks;
     }
 
     @Override

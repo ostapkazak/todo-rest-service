@@ -17,7 +17,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriTemplate;
 
+import java.net.URI;
+import java.time.Duration;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +35,8 @@ public class RemoteTaskServiceAdapter {
         this.taskMapper = taskMapper;
         this.restTemplate = builder
             .rootUri(config.getUrl())
+            .setConnectTimeout(Duration.ofSeconds(config.getConnectTimeout()))
+            .setReadTimeout(Duration.ofSeconds(config.getReadTimeout()))
             .errorHandler(new RemoteTaskServiceErrorHandler())
             .basicAuthentication(config.getUsername(),config.getPassword())
             .build();
@@ -43,31 +48,34 @@ public class RemoteTaskServiceAdapter {
         Map<String,Object> params = new HashMap<>();
         params.put("active",active);
         params.put("query",query);
-        return taskMapper.toListOfDto(callService("/tasks",HttpMethod.GET,null,TaskListResponse.class,params).getData());
+        return taskMapper.toListOfDto(callService("/tasks",Collections.emptyMap(),HttpMethod.GET,null,TaskListResponse.class,params).getData());
     }
 
     public TaskDto getTaskById(String id){
-        return taskMapper.toDto(callService("/tasks/"+id,HttpMethod.GET,null,TaskResponse.class,Collections.emptyMap()).getData());
+        return taskMapper.toDto(callService("/tasks/{id}",Map.of("id",id),HttpMethod.GET,null,TaskResponse.class,Collections.emptyMap()).getData());
     }
 
     public TaskDto toggleTask(String id,Boolean done){
-        return taskMapper.toDto(callService("/tasks/"+id+"/done",HttpMethod.PATCH,new ToggleTaskRequest(done),TaskResponse.class,Collections.emptyMap()).getData());
+        return taskMapper.toDto(callService("/tasks/{id}/done",Map.of("id",id),HttpMethod.PATCH,new ToggleTaskRequest(done),TaskResponse.class,Collections.emptyMap()).getData());
     }
 
     public TaskDto deleteTask(String id){
-        return taskMapper.toDto(callService("/tasks/"+id,HttpMethod.DELETE,null,TaskResponse.class,Collections.emptyMap()).getData());
+        return taskMapper.toDto(callService("/tasks/{id}",Map.of("id",id),HttpMethod.DELETE,null,TaskResponse.class,Collections.emptyMap()).getData());
     }
 
     public TaskDto createTask(String text){
-        return taskMapper.toDto(callService("/tasks/",HttpMethod.POST,new CreateTaskRequest(text), TaskResponse.class,Collections.emptyMap()).getData());
+        return taskMapper.toDto(callService("/tasks/",Collections.emptyMap(),HttpMethod.POST,new CreateTaskRequest(text), TaskResponse.class,Collections.emptyMap()).getData());
     }
 
     public TaskDto editTask(String id,String text){
-        return taskMapper.toDto(callService("/tasks/"+id+"/edit",HttpMethod.PATCH,new CreateTaskRequest(text),TaskResponse.class,Collections.emptyMap()).getData());
+        return taskMapper.toDto(callService("/tasks/{id}/edit",Map.of("id",id),HttpMethod.PATCH,new CreateTaskRequest(text),TaskResponse.class,Collections.emptyMap()).getData());
     }
 
-    private <T extends RemoteTaskServiceResponse> T callService(String url, HttpMethod httpMethod, Object body, Class<T> responseClass, Map<String,Object> params){
-        ResponseEntity<T> response = restTemplate.exchange(url, httpMethod, buildEntity(body), responseClass, params);
+    private <T extends RemoteTaskServiceResponse> T callService(String url, Map<String,String> pathVariables, HttpMethod httpMethod, Object body, Class<T> responseClass, Map<String,Object> params){
+        UriTemplate uriTemplate = new UriTemplate(url);
+        URI uri = uriTemplate.expand(pathVariables);
+
+        ResponseEntity<T> response = restTemplate.exchange(uri.getPath(), httpMethod, buildEntity(body), responseClass,params);
 
         if (response.getBody() != null){
             return response.getBody();
