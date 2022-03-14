@@ -1,6 +1,7 @@
 package com.ostapdev.todo.controller;
 
 import com.ostapdev.todo.dto.task.CreateTaskDtoRequest;
+import com.ostapdev.todo.dto.task.EditTaskRequest;
 import com.ostapdev.todo.dto.task.TaskDto;
 import com.ostapdev.todo.model.Account;
 import com.ostapdev.todo.service.task.TaskService;
@@ -27,26 +28,27 @@ public class TaskController {
     }
 
     @PostMapping
-    public void addTask(@Valid @RequestBody CreateTaskDtoRequest request, @AuthenticationPrincipal Account account){
+    public void addTask(@Valid @RequestBody CreateTaskDtoRequest request, @AuthenticationPrincipal Account account
+        ,@RequestParam(name = "remote",required = false,defaultValue = "false") Boolean remote){
         log.debug("New task: {}", request.getTaskDescription());
-        service.add(request.getTaskDescription(), account.getUsername());
+        service.add(request.getTaskDescription(), account.getUsername(),remote);
     }
 
     @PatchMapping("{id}")
-    public void editTask(@PathVariable @Min(1) Long id, @Valid @RequestBody TaskDto task){
-        log.debug("Edit task {} - {}", id, task.getTaskDescription());
-        service.edit(id,task.getTaskDescription());
+    public void editTask(@PathVariable @Min(1) Long id, @Valid @RequestBody EditTaskRequest task, @RequestParam(name = "remote",required = false,defaultValue = "false") Boolean remote){
+        log.debug("Edit task {} - {}", id, task.getDescription());
+        service.edit(id,task.getDescription(),remote);
     }
 
     @PatchMapping("{id}/done")
-    public void toggleTask(@PathVariable @Min(1) Long id){
+    public void toggleTask(@PathVariable @Min(1) Long id,@RequestParam(name = "remote",required = false,defaultValue = "false") Boolean remote){
         log.debug("Toggle task {}", id);
-        service.toggle(id);
+        service.toggle(id,remote);
     }
 
     @DeleteMapping("{id}")
-    public void deleteTask(@PathVariable @Min(1) Long id){
+    public void deleteTask(@PathVariable @Min(1) Long id,@RequestParam(name = "remote",required = false,defaultValue = "false") Boolean remote){
         log.debug("Delete task {}", id);
-        service.delete(id);
+        service.delete(id,remote);
     }
 }

@@ -1,6 +1,7 @@
 package com.ostapdev.todo.config;
 
 import com.ostapdev.todo.dto.account.AccountMapper;
+import com.ostapdev.todo.dto.task.RemoteTaskMapper;
 import com.ostapdev.todo.dto.task.TaskMapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.context.annotation.Bean;
@@ -17,5 +18,10 @@ public class BeanConfig {
     @Bean
     public TaskMapper taskMapper(){
         return Mappers.getMapper(TaskMapper.class);
+    }
+
+    @Bean
+    public RemoteTaskMapper remoteTaskMapper(){
+        return Mappers.getMapper(RemoteTaskMapper.class);
     }
 }

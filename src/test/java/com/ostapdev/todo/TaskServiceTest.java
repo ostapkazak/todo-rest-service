@@ -35,6 +35,6 @@ public class TaskServiceTest {
     @Test
     public void Toggle_TaskDoesntExist_ThrowException(){
         when(taskRepo.findById(1L)).thenReturn(Optional.empty());
-        assertThrows(NoSuchDataException.class,()->taskService.toggle(1L));
+        assertThrows(NoSuchDataException.class,()->taskService.toggle(1L, false));
     }
 }
