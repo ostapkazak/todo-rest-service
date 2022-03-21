@@ -10,8 +10,11 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
+import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @ActiveProfiles({"test"})
@@ -27,6 +30,7 @@ public class CustomTaskRepoTestContainers {
 
         List<Task> tasksFromDB = taskRepo.find("",true,1L).get();
 
+        await().atMost(5, TimeUnit.SECONDS).untilAsserted(()-> assertTrue(tasksFromDB.size()>0));
         assertNotNull(tasksFromDB.get(0));
     }
 }
