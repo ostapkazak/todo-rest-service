@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,7 +24,7 @@ public class TaskController {
 
     @GetMapping
     public List<TaskDto> getTasks(@RequestParam(name = "isAll",required = false) Boolean isAll
-            , @RequestParam(name = "target",required = false) String target){
+            , @RequestParam(name = "target",required = false) String target) throws ExecutionException, InterruptedException {
         return service.getTasks(isAll,target);
     }
 

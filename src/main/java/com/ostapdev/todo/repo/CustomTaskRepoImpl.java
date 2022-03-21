@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Repository
 @RequiredArgsConstructor
@@ -16,7 +17,7 @@ public class CustomTaskRepoImpl implements CustomTaskRepo{
     private final EntityManager entityManager;
 
     @Override
-    public List<Task> find(String targetDescription, Boolean includeCompleted, Long accountId) {
+    public CompletableFuture<List<Task>> find(String targetDescription, Boolean includeCompleted, Long accountId) {
         StringBuilder jpql = new StringBuilder("from Task t ");
         List<String> conditions = new ArrayList<>();
 
@@ -43,6 +44,6 @@ public class CustomTaskRepoImpl implements CustomTaskRepo{
             typedQuery.setParameter("desc","%"+targetDescription+"%");
         }
 
-        return typedQuery.getResultList();
+        return CompletableFuture.completedFuture(typedQuery.getResultList());
     }
 }
