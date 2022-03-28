@@ -15,6 +15,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriTemplate;
@@ -25,6 +26,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @Component
 public class RemoteTaskServiceAdapter {
@@ -43,12 +45,13 @@ public class RemoteTaskServiceAdapter {
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
     }
 
-    public List<TaskDto> getTasks(Boolean active,String query){
+    @Async
+    public CompletableFuture<List<TaskDto>> getTasks(Boolean active, String query){
         if (active != null) active = !active;
         Map<String,Object> params = new HashMap<>();
         params.put("active",active);
         params.put("query",query);
-        return taskMapper.toListOfDto(callService("/tasks",Collections.emptyMap(),HttpMethod.GET,null,TaskListResponse.class,params).getData());
+        return CompletableFuture.completedFuture(taskMapper.toListOfDto(callService("/tasks", Collections.emptyMap(), HttpMethod.GET, null, TaskListResponse.class, params).getData()));
     }
 
     public TaskDto getTaskById(String id){

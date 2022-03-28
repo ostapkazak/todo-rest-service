@@ -13,6 +13,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @RequiredArgsConstructor
 @Service
@@ -49,9 +51,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDto> getTasks(Boolean isAll, String target) {
-        List<TaskDto> tasks = remoteTaskServiceAdapter.getTasks(isAll,target);
-        tasks.addAll(taskMapper.toListOfDto(taskRepo.find(target,isAll,accountService.getAccountByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getId())));
+    public List<TaskDto> getTasks(Boolean isAll, String target) throws ExecutionException, InterruptedException {
+        CompletableFuture<List<TaskDto>> futureRemoteTasks = remoteTaskServiceAdapter.getTasks(isAll,target);
+        CompletableFuture<List<Task>> futureLocalTasks = taskRepo.find(target,isAll,accountService.getAccountByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getId());
+
+        CompletableFuture.allOf(futureRemoteTasks,futureLocalTasks).join();
+        List<TaskDto> tasks = futureRemoteTasks.get();
+        tasks.addAll(taskMapper.toListOfDto(futureLocalTasks.get()));
         return tasks;
     }
 
